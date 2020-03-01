@@ -69,3 +69,9 @@ def bencode_decoder(bencode_data):
     else:
         raise TypeError("Not a proper Bencode String")
     return decoded_value, bencode_data
+
+
+def decoder(bencode_data):
+    """Returns the python native data type decoded from Bencode String"""
+    decoded_value, _ = bencode_decoder(bencode_data)
+    return decoded_value

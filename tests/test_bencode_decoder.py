@@ -1,6 +1,7 @@
 import unittest
+
 #  coverage run --omit="venv/*","tests/*" -m pytest
-from bencode_decoder import bencode_decoder
+from bencode.bencode_decoder import bencode_decoder, decoder
 
 
 class TestSuiteBencodeDecoder(unittest.TestCase):
@@ -31,3 +32,13 @@ class TestSuiteBencodeDecoder(unittest.TestCase):
         decoded_value, bencode_data = bencode_decoder(bencode_data=bencode_data)
         self.assertEqual(decoded_value, {"bar": "spam", "foo": 42})
         self.assertEqual(bencode_data, "")
+
+    def test_decoder_list(self):
+        bencode_data = "l5:green3:red4:bluee"
+        decoded_value = decoder(bencode_data=bencode_data)
+        self.assertEqual(decoded_value, ["green", "red", "blue"])
+
+    def test_decoder_string(self):
+        bencode_data = "8:robots54"
+        decoded_value = decoder(bencode_data=bencode_data)
+        self.assertEqual(decoded_value, "robots54")

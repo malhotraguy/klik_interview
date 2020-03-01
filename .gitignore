@@ -1,2 +1,7 @@
 # Project exclude paths
 /venv/
+bencode/__pycache__/
+tests/__pycache__/
+/build/
+/dist/
+/klik_bencode.egg-info/
