@@ -2,9 +2,8 @@ def decode_int(value):
     """Decoding the Bencode value to native int value"""
     end_position = value.find("e")
     if len(value[1:end_position]) > 1:
-        if value[1] == "-":
-            if value[2] == "0":
-                raise ValueError("Negative Zero is not allowed!")
+        if value[1] == "-" and value[2] == "0":
+            raise ValueError("Negative Zero is not allowed!")
         if value[1] == "0":
             raise ValueError("Leading Zero is not allowed")
     decoded_integer = int(value[1:end_position])
@@ -20,9 +19,9 @@ def decode_string(value):
     length_of_decoded_string = int(value[:delimiter_position])
     string_start_position = delimiter_position + 1
     decoded_string = value[
-        string_start_position : string_start_position + length_of_decoded_string
-    ]
-    bencode_data = value[delimiter_position + length_of_decoded_string + 1 :]
+                     string_start_position: string_start_position + length_of_decoded_string
+                     ]
+    bencode_data = value[delimiter_position + length_of_decoded_string + 1:]
     return decoded_string, bencode_data
 
 
