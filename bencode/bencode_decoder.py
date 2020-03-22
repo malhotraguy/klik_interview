@@ -29,11 +29,9 @@ def decode_list(value):
     """Decoding Bencode value to native list value"""
     bencode_data = value[1:]
     decoded_list = []
-    while len(bencode_data) > 1:
+    while len(bencode_data) > 1 and bencode_data != "ee":
         decoded_value, bencode_data = bencode_decoder(bencode_data=bencode_data)
         decoded_list.append(decoded_value)
-        if bencode_data == "ee":
-            bencode_data = ""
     bencode_data = ""
     return decoded_list, bencode_data
 
@@ -42,14 +40,12 @@ def decode_dictionary(value):
     """Decoding Bencode value to native dictionary value"""
     bencode_data = value[1:]
     decoded_dict = {}
-    while bencode_data:
+    while len(bencode_data) > 1 and bencode_data != "ee":
         decoded_key, bencode_data = bencode_decoder(bencode_data=bencode_data)
         if not decoded_key.isalpha():
             raise TypeError(f"Keys can only be string. But {decoded_key} is not")
         decoded_value, bencode_data = bencode_decoder(bencode_data=bencode_data)
         decoded_dict[decoded_key] = decoded_value
-        if bencode_data == "ee":
-            bencode_data = ""
     bencode_data = ""
 
     return decoded_dict, bencode_data
